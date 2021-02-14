@@ -15,10 +15,12 @@
 @import url('../blocks/popup/_opened/popup_opened.css');
 @import url('../blocks/register/register.css');
 @import url('../blocks/bar/bar.css');
+@import url('../blocks/login/login.css');
+@import url('../blocks/info-tooltip-popup/info-tooltip-popup.css');
+
 .App {
   background-color: #000000;
   color: #FFFFFF;
-  width: 100vw;
   font-family: 'Inter', 'Arial', sans-serif;
   transition: all 1s ease-out;
 }

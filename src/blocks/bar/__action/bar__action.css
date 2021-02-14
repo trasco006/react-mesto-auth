@@ -10,3 +10,7 @@
     font-family: 'Inter', "Helvetica Neue", "Arial", sans-serif;
     text-decoration: none;
 }
+.bar__action:hover{
+    opacity: 0.6;
+    transition: opacity .3s ease-in-out;
+}

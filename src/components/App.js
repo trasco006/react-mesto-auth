@@ -12,6 +12,8 @@ import {EditAvatarPopup} from "./EditAvatarPopup/EditAvatarPopup";
 import {AddPlacePopu} from "./AddPlacePopup/AddPlacePopu";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import Register from "./Register/Register";
+import Login from "./Login/Login"
+import InfoTooltip from "./InfoTooltip/InfoTooltip";
 
 class App extends React.Component {
   static contextType = CurrentUserContext
@@ -19,7 +21,9 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: true,
+      loggedIn: false,
+      regStatus:  true,
+      isInfoTooltipPopupOpen: true,
       isEditProfilePopupOpen: false,
       isAddPlacePopupOpen: false,
       isEditAvatarPopupOpen: false,
@@ -114,7 +118,8 @@ class App extends React.Component {
       onClose: true,
       isEditProfilePopupOpen: false,
       isAddPlacePopupOpen: false,
-      isEditAvatarPopupOpen: false
+      isEditAvatarPopupOpen: false,
+      isInfoTooltipPopupOpen: false
     })
   }
 
@@ -188,10 +193,16 @@ class App extends React.Component {
       <CurrentUserContext.Provider value={this.state.currentUser}>
         <div className="App">
           <div className="page">
+            {/*попап подтвреждения регистрации*/}
+            {this.state.isInfoTooltipPopupOpen === true ? <InfoTooltip onClose={this.closeAllPopups}
+                                                                       regStatus={this.state.regStatus}/> : null}
             <Header loggedIn={this.state.loggedIn}/>
             <Switch>
               <Route path="/sign-up">
                 <Register/>
+              </Route>
+              <Route path="/sign-in">
+                <Login/>
               </Route>
               <ProtectedRoute path="/" loggedIn={this.state.loggedIn} component={Footer}/>
               <ProtectedRoute path="/" loggedIn={this.state.loggedIn} component={Main}

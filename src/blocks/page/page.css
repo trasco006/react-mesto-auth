@@ -2,6 +2,7 @@
   width: 882px;
   min-height: 100vh;
   margin: 0 auto;
+  position: relative;
 }
 
 @media (max-width: 882px) {

@@ -1,0 +1,22 @@
+@import url('__container/info-tooltip-popup__container.css');
+@import url('__escape-button/info-tooltip-popup__escape-button.css');
+@import url('__title/info-tooltip-popup__title.css');
+@import url('__image/info-tooltip-popup__image.css');
+@import url('__overlay/info-tooltip-popup__overlay.css');
+@import url('__image/_type/info-tooltip-popup__image_type_no.css');
+@import url('__image/_type/info-tooltip-popup__image_type_ok.css');
+.info-tooltip-popup {
+    display: flex;
+    position: fixed;
+    z-index: 4;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    justify-content: center;
+    align-items: center;
+    /*visibility: hidden;*/
+    /*opacity: 0;*/
+    /*transition: visibility 0s, opacity 0.1s linear;*/
+}
