@@ -1,6 +1,6 @@
 import '../App.css';
 import React from "react";
-// import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import {Route, Switch, Redirect, withRouter} from 'react-router-dom';
 import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
 import Main from "./Main/Main";
@@ -10,13 +10,16 @@ import {CurrentUserContext} from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup/EditProfilePopup";
 import {EditAvatarPopup} from "./EditAvatarPopup/EditAvatarPopup";
 import {AddPlacePopu} from "./AddPlacePopup/AddPlacePopu";
-
+import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
+import Register from "./Register/Register";
 
 class App extends React.Component {
   static contextType = CurrentUserContext
+
   constructor(props) {
     super(props);
     this.state = {
+      loggedIn: true,
       isEditProfilePopupOpen: false,
       isAddPlacePopupOpen: false,
       isEditAvatarPopupOpen: false,
@@ -42,7 +45,6 @@ class App extends React.Component {
     this.handleCardDelete = this.handleCardDelete.bind(this)
     this.handleCardLike = this.handleCardLike.bind(this)
   }
-
 
   componentDidMount() {
     // получение данных пользователя с сервера
@@ -181,23 +183,31 @@ class App extends React.Component {
     })
   }
 
-
   render() {
     return (
       <CurrentUserContext.Provider value={this.state.currentUser}>
         <div className="App">
           <div className="page">
-            <Header/>
-            <Main openAddPlacePopup={this.handleAddPlaceClick}
-                  openEditProfilePopup={this.handleEditProfileClick}
-                  openEditAvatarPopup={this.handleEditAvatarClick}
-                  onCardClick={this.handleCardClick}
-                  closeAllPopups={this.closeAllPopups}
-                  cards={this.state.cards}
-                  onCardLike={this.handleCardLike}
-                  onCardDelete={this.handleCardDelete}
-            />
-            <Footer/>
+            <Header loggedIn={this.state.loggedIn}/>
+            <Switch>
+              <Route path="/sign-up">
+                <Register/>
+              </Route>
+              <ProtectedRoute path="/" loggedIn={this.state.loggedIn} component={Footer}/>
+              <ProtectedRoute path="/" loggedIn={this.state.loggedIn} component={Main}
+                              openAddPlacePopup={this.handleAddPlaceClick}
+                              openEditProfilePopup={this.handleEditProfileClick}
+                              openEditAvatarPopup={this.handleEditAvatarClick}
+                              onCardClick={this.handleCardClick}
+                              closeAllPopups={this.closeAllPopups}
+                              cards={this.state.cards}
+                              onCardLike={this.handleCardLike}
+                              onCardDelete={this.handleCardDelete}/>
+              <Route exact path="/">
+
+                {this.state.loggedIn === true ? <Redirect to="/"/> : <Redirect to="/sign-up"/>}
+              </Route>
+            </Switch>
           </div>
           {/*попап изменения профиля*/}
           {this.state.isEditProfilePopupOpen === true ? <EditProfilePopup isOpen={this.state.isEditProfilePopupOpen}

@@ -1,0 +1,7 @@
+.bar__action_logged{
+    color: #A9A9A9;
+}
+.bar__action_logged:hover{
+    opacity: 0.6;
+    transition: opacity .3s ease-in-out;
+}

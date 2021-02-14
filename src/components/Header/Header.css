@@ -2,9 +2,13 @@
 .header {
   width: 882px;
   height: 74px;
-  padding: 45px;
-  margin-left: auto;
+  padding: 45px 0 0 0 ;
+  margin: 0 auto;
   border-bottom: 1px solid #545454;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 @media (max-width: 882px) {
