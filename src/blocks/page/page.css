@@ -1,0 +1,11 @@
+.page {
+  width: 882px;
+  min-height: 100vh;
+  margin: 0 auto;
+}
+
+@media (max-width: 882px) {
+  .page {
+    width: 100vw;
+  }
+}

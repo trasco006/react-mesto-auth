@@ -1,0 +1,27 @@
+@import url('__escape-button/popup-avatar__escape-button.css');
+@import url('__title/popup-avatar__title.css');
+@import url('__input/popup-avatar__input.css');
+@import url('__save-button/popup-avatar__save-button.css');
+@import url('__container/popup-avatar__container.css');
+@import url('__overlay/popup-avatar__overlay.css');
+.popup-avatar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.1s linear;
+
+}
+
+@media (max-width: 450px) {
+  .popup-avatar {
+    max-width: 240px;
+  }
+}

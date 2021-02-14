@@ -1,0 +1,21 @@
+@import url('__container/popup-image__container.css');
+@import url('__escape-button/popup-image__escape-button.css');
+@import url('__title/popup-image__title.css');
+@import url('__item/popup-image__item.css');
+@import url('__overlay/popup-image__overlay.css');
+
+.popup-image {
+    display: flex;
+    position: fixed;
+    z-index: 4;
+    top: 0;
+    left: 0;
+    min-width: 100vw;
+    min-height: 100vh;
+    background-color: rgba(0, 0, 0, .5);
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.1s linear;
+}

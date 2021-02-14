@@ -1,0 +1,27 @@
+@import url('__escape-button/popup-card__escape-button.css');
+@import url('__title/popup-card__title.css');
+@import url('__input/popup-card__input.css');
+@import url('__save-button/popup-card__save-button.css');
+@import url('__container/popup-card__container.css');
+@import url('__overlay/popup-card__overlay.css');
+.popup-card {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.1s linear;
+
+}
+
+@media (max-width: 450px) {
+  .popup-card {
+    max-width: 240px;
+  }
+}
