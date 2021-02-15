@@ -1,0 +1,24 @@
+.profile__avatar-edit {
+    opacity: 0;
+    background: black;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-right: 30px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+@media (max-width: 330px) {
+    .profile__avatar-edit {
+        margin: 0 0 14px 0;
+    }
+}
+
+.profile__avatar-edit:hover{
+    opacity: 0.8;
+    transition: opacity 0.1s ease-in;
+}

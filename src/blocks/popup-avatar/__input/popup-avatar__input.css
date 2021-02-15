@@ -1,0 +1,17 @@
+.popup-avatar__input {
+  width: 76.74%;
+  min-height: 27.6px;
+  margin: 0 auto;
+  border: 0;
+  padding: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  margin-bottom: 5px;
+  outline: none;
+}
+
+@media (max-width: 450px) {
+  .popup-avatar__input {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

@@ -1,0 +1,26 @@
+@import url('__escape-button/popup-delete__escape-button.css');
+@import url('__title/popup-delete__title.css');
+@import url('__save-button/popup-delete__save-button.css');
+@import url('__container/popup-delete__container.css');
+@import url('__overlay/popup-delete__overlay.css');
+.popup-delete {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.1s linear;
+
+}
+
+@media (max-width: 450px) {
+  .popup-delete {
+    max-width: 240px;
+  }
+}

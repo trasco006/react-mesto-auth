@@ -1,0 +1,21 @@
+.popup-card__title {
+  width: 76.74%;
+  margin: 0 auto;
+  border: 0;
+  padding: 0;
+  font-family: Inter, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  color: #000000;
+  margin-top: 34px;
+  margin-bottom: 54px;
+}
+
+@media (max-width: 450px) {
+  .popup-card__title {
+    font-size: 18px;
+    line-height: 22px;
+  }
+}

@@ -1,0 +1,20 @@
+.login__submit-button{
+    width: 100%;
+    font-family: 'Inter', "Helvetica Neue", "Arial", sans-serif;
+    height: 50px;
+    background: #FFFFFF;
+    border-radius: 2px;
+    margin: 186px auto 15px auto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #000000;
+    border-radius: 2px;
+}
+
+.login__submit-button:hover{
+    opacity: 0.85;
+    transition: all .3s ease-in-out;
+}
