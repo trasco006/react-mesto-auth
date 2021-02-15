@@ -14,6 +14,7 @@ import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import Register from "./Register/Register";
 import Login from "./Login/Login"
 import InfoTooltip from "./InfoTooltip/InfoTooltip";
+import auth from "../utils/authentication";
 
 class App extends React.Component {
   static contextType = CurrentUserContext
@@ -21,9 +22,12 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userInfo: {
+        email: ''
+      },
       loggedIn: false,
-      regStatus:  true,
-      isInfoTooltipPopupOpen: true,
+      regStatus: false,
+      isInfoTooltipPopupOpen: false,
       isEditProfilePopupOpen: false,
       isAddPlacePopupOpen: false,
       isEditAvatarPopupOpen: false,
@@ -48,9 +52,13 @@ class App extends React.Component {
     this.handleAddCard = this.handleAddCard.bind(this)
     this.handleCardDelete = this.handleCardDelete.bind(this)
     this.handleCardLike = this.handleCardLike.bind(this)
+    this.handleRegNewUser = this.handleRegNewUser.bind(this)
+    this.handleLogin = this.handleLogin.bind(this)
+    this.handleTokenCheck = this.handleTokenCheck.bind(this)
   }
 
   componentDidMount() {
+
     // получение данных пользователя с сервера
     api.getUserInfo().then((res) => {
       this.setState({
@@ -69,6 +77,7 @@ class App extends React.Component {
       .catch((err) => {
         console.log(err);
       });
+    this.handleTokenCheck()
   }
 
 // обновление данных пользователя
@@ -188,24 +197,78 @@ class App extends React.Component {
     })
   }
 
+// Регистрация нового пользователя
+  handleRegNewUser(data) {
+    auth.signUp(data)
+      .then(() => {
+        this.setState({
+          isInfoTooltipPopupOpen: true,
+          regStatus: true
+        })
+      })
+      .catch(() => {
+          this.setState({
+            isInfoTooltipPopupOpen: true,
+            regStatus: false
+          })
+        }
+      )
+  }
+
+// Вход в аккаунт
+  handleLogin(data) {
+    auth.signIn(data)
+      .then((data) => {
+          this.setState({
+            loggedIn: true
+          })
+          localStorage.setItem('jwt', data.token);
+        }
+      )
+      .catch(() => {
+          this.setState({loggedIn: false})
+        }
+      )
+  }
+
+// Проверка токена на валидность
+  handleTokenCheck() {
+    if (localStorage.getItem('jwt')) {
+      const jwt = localStorage.getItem('jwt');
+      auth.checkToken(jwt).then((res) => {
+        this.setState({
+          loggedIn: true,
+          userInfo: {
+            email: res.data.email
+          }
+        })
+      })
+    }
+  }
+
+
   render() {
     return (
       <CurrentUserContext.Provider value={this.state.currentUser}>
         <div className="App">
           <div className="page">
-            {/*попап подтвреждения регистрации*/}
+            {/*попап подтверждения регистрации*/}
             {this.state.isInfoTooltipPopupOpen === true ? <InfoTooltip onClose={this.closeAllPopups}
                                                                        regStatus={this.state.regStatus}/> : null}
-            <Header loggedIn={this.state.loggedIn}/>
+            <Header userEmail={this.state.userInfo.email} loggedIn={this.state.loggedIn}/>
             <Switch>
+
               <Route path="/sign-up">
-                <Register/>
+                {this.state.loggedIn === true ? <Redirect to="./"/> :
+                  <Register regNewUser={this.handleRegNewUser}/>}
               </Route>
               <Route path="/sign-in">
-                <Login/>
+                {this.state.loggedIn === true ? <Redirect to="./"/> :
+                  <Login loginUser={this.handleLogin}/>}
               </Route>
-              <ProtectedRoute path="/" loggedIn={this.state.loggedIn} component={Footer}/>
-              <ProtectedRoute path="/" loggedIn={this.state.loggedIn} component={Main}
+              <ProtectedRoute path="/"
+                              loggedIn={this.state.loggedIn}
+                              component={Main}
                               openAddPlacePopup={this.handleAddPlaceClick}
                               openEditProfilePopup={this.handleEditProfileClick}
                               openEditAvatarPopup={this.handleEditAvatarClick}
@@ -214,26 +277,24 @@ class App extends React.Component {
                               cards={this.state.cards}
                               onCardLike={this.handleCardLike}
                               onCardDelete={this.handleCardDelete}/>
-              <Route exact path="/">
-
-                {this.state.loggedIn === true ? <Redirect to="/"/> : <Redirect to="/sign-up"/>}
-              </Route>
             </Switch>
+            {this.state.loggedIn === true ? <Footer/> : null}
           </div>
           {/*попап изменения профиля*/}
-          {this.state.isEditProfilePopupOpen === true ? <EditProfilePopup isOpen={this.state.isEditProfilePopupOpen}
-                                                                          onUpdateUser={this.handleUpdateUser}
-                                                                          onClose={this.closeAllPopups}/> : null}
+          {this.state.isEditProfilePopupOpen === true ?
+            <EditProfilePopup isOpen={this.state.isEditProfilePopupOpen}
+                              onUpdateUser={this.handleUpdateUser}
+                              onClose={this.closeAllPopups}/> : null}
           {/*попап изменения аватара*/}
-          {this.state.isEditAvatarPopupOpen === true ? <EditAvatarPopup isOpen={this.state.isEditAvatarPopupOpen}
-                                                                        onUpdateAvatar={this.handleUpdateAvatar}
-                                                                        onClose={this.closeAllPopups}/> : null}
+          {this.state.isEditAvatarPopupOpen === true ?
+            <EditAvatarPopup isOpen={this.state.isEditAvatarPopupOpen}
+                             onUpdateAvatar={this.handleUpdateAvatar}
+                             onClose={this.closeAllPopups}/> : null}
           {/*попап добавления карточки*/}
-          {this.state.isAddPlacePopupOpen === true ? <AddPlacePopu isOpen={this.state.isAddPlacePopupOpen}
-                                                                   onAddPlace={this.handleAddCard}
-                                                                   onClose={this.closeAllPopups}/> : null}
-
-
+          {this.state.isAddPlacePopupOpen === true ?
+            <AddPlacePopu isOpen={this.state.isAddPlacePopupOpen}
+                          onAddPlace={this.handleAddCard}
+                          onClose={this.closeAllPopups}/> : null}
           <ImagePopup srcImg={this.state.cardLink}
                       title={this.state.cardTitle}
                       closeAllPopups={this.closeAllPopups}
