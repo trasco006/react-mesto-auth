@@ -37,18 +37,20 @@ export default class Login extends React.Component {
   render() {
     return (
       <div className="login">
-        <form className="login__form">
+        <form onSubmit={this.handleSubmit}
+              className="login__form">
           <p className="login__title">Вход</p>
           <input onChange={this.handleChangeEmail}
                  type="email"
                  placeholder="Email"
+                 value={this.state.inputEmail}
                  className="login__input"/>
           <input onChange={this.handleChangePassword}
                  type="password"
+                 value={this.state.inputPassword}
                  placeholder="Пароль"
                  className="login__input"/>
-          <button onClick={this.handleSubmit}
-                  type="button"
+          <button type="submit"
                   className="login__submit-button">Войти
           </button>
         </form>
