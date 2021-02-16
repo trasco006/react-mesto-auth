@@ -35,7 +35,6 @@ class App extends React.Component {
       title: '',
       children: '',
       isOpen: false,
-      onClose: true,
       selectedCard: false,
       currentUser: {},
       cards: []
@@ -136,7 +135,6 @@ class App extends React.Component {
 //открытие попапа редактирования профиля
   handleEditProfileClick(evt) {
     this.setState({
-      onClose: !this.state.onClose,
       isOpen: !this.state.isOpen,
       name: 'profile',
       title: 'Редактировать профиль',
@@ -147,7 +145,6 @@ class App extends React.Component {
 // открытие попапа измеения аватара
   handleEditAvatarClick(evt) {
     this.setState({
-      onClose: !this.state.onClose,
       isOpen: !this.state.isOpen,
       name: 'avatar',
       title: 'Обновить аватар',
@@ -158,7 +155,6 @@ class App extends React.Component {
 // открытие попапа добавления карточки
   handleAddPlaceClick(evt) {
     this.setState({
-      onClose: !this.state.onClose,
       name: 'place',
       isOpen: !this.state.isOpen,
       title: 'Новое место',
@@ -185,7 +181,10 @@ class App extends React.Component {
       this.setState({
         cards: newCards
       })
-    });
+    })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
 // удаление карточки
@@ -196,6 +195,9 @@ class App extends React.Component {
         cards: newCards
       })
     })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
 // Регистрация нового пользователя
@@ -224,6 +226,7 @@ class App extends React.Component {
             loggedIn: true
           })
           localStorage.setItem('jwt', data.token);
+          this.handleTokenCheck();
         }
       )
       .catch(() => {
@@ -252,6 +255,9 @@ class App extends React.Component {
           }
         })
       })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }
 
@@ -287,7 +293,7 @@ class App extends React.Component {
                               onCardLike={this.handleCardLike}
                               onCardDelete={this.handleCardDelete}/>
             </Switch>
-            {this.state.loggedIn === true ? <Footer/> : null}
+            <Footer/>
           </div>
           {/*попап изменения профиля*/}
           {this.state.isEditProfilePopupOpen === true ?
