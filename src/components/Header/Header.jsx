@@ -14,7 +14,7 @@ class Header extends React.Component {
         <div className="header__logo"/>
         {this.props.loggedIn === true ? (<div className="header__status-bar bar">
           <a href="#" className="bar__email">{this.props.userEmail}</a>
-          <a href="#" className="bar__action bar__action_logged">Выйти</a>
+          <a href="#" onClick={this.props.logOut} className="bar__action bar__action_logged">Выйти</a>
         </div>) : (
           window.location.pathname === '/sign-in' ? (
               <div className="header__status-bar bar">

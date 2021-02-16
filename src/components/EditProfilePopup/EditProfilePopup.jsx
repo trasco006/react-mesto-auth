@@ -20,6 +20,13 @@ export default class EditProfilePopup extends React.Component {
     this.handleChangeUserName = this.handleChangeUserName.bind(this)
   }
 
+ componentDidMount() {
+this.setState({
+  inputUserName: this.context.name,
+  inputUserAbout: this.context.about
+})
+ }
+
   handleSubmit(event) {
     event.preventDefault();
 

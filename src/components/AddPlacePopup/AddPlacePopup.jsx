@@ -1,7 +1,7 @@
 import React from 'react'
 import PopupWithForm from "../PopupWithForm/PopupWithForm";
 
-export class AddPlacePopu extends React.Component {
+export class AddPlacePopup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

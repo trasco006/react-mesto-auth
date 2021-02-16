@@ -9,7 +9,7 @@ import api from "./../utils/api"
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup/EditProfilePopup";
 import {EditAvatarPopup} from "./EditAvatarPopup/EditAvatarPopup";
-import {AddPlacePopu} from "./AddPlacePopup/AddPlacePopu";
+import {AddPlacePopup} from "./AddPlacePopup/AddPlacePopup";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import Register from "./Register/Register";
 import Login from "./Login/Login"
@@ -37,7 +37,7 @@ class App extends React.Component {
       isOpen: false,
       onClose: true,
       selectedCard: false,
-      currentUser: '',
+      currentUser: {},
       cards: []
     }
     this.handleEditProfileClick = this.handleEditProfileClick.bind(this)
@@ -54,6 +54,7 @@ class App extends React.Component {
     this.handleCardLike = this.handleCardLike.bind(this)
     this.handleRegNewUser = this.handleRegNewUser.bind(this)
     this.handleLogin = this.handleLogin.bind(this)
+    this.handleLogout = this.handleLogout.bind(this)
     this.handleTokenCheck = this.handleTokenCheck.bind(this)
   }
 
@@ -231,6 +232,14 @@ class App extends React.Component {
       )
   }
 
+// Выход из аккаунта
+  handleLogout() {
+    localStorage.removeItem('jwt')
+    this.setState({
+      loggedIn: false
+    })
+  }
+
 // Проверка токена на валидность
   handleTokenCheck() {
     if (localStorage.getItem('jwt')) {
@@ -255,7 +264,7 @@ class App extends React.Component {
             {/*попап подтверждения регистрации*/}
             {this.state.isInfoTooltipPopupOpen === true ? <InfoTooltip onClose={this.closeAllPopups}
                                                                        regStatus={this.state.regStatus}/> : null}
-            <Header userEmail={this.state.userInfo.email} loggedIn={this.state.loggedIn}/>
+            <Header logOut={this.handleLogout} userEmail={this.state.userInfo.email} loggedIn={this.state.loggedIn}/>
             <Switch>
 
               <Route path="/sign-up">
@@ -292,9 +301,9 @@ class App extends React.Component {
                              onClose={this.closeAllPopups}/> : null}
           {/*попап добавления карточки*/}
           {this.state.isAddPlacePopupOpen === true ?
-            <AddPlacePopu isOpen={this.state.isAddPlacePopupOpen}
-                          onAddPlace={this.handleAddCard}
-                          onClose={this.closeAllPopups}/> : null}
+            <AddPlacePopup isOpen={this.state.isAddPlacePopupOpen}
+                           onAddPlace={this.handleAddCard}
+                           onClose={this.closeAllPopups}/> : null}
           <ImagePopup srcImg={this.state.cardLink}
                       title={this.state.cardTitle}
                       closeAllPopups={this.closeAllPopups}
